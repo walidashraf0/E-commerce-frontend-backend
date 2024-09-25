@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { baseUrl, USERS } from "../../Api/Api";
 import Cookie from "cookie-universal";
-import Logout from "../../Pages/Auth/Logout";
+import Logout from "../Auth/Logout";
 
 export default function Users() {
   // Cookie
