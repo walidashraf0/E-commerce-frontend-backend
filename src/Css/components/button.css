@@ -1,0 +1,19 @@
+.btn {
+    background-color: white;
+    outline: none;
+    border: 0;
+    padding: 20px 30px;
+    border-radius: 6px;
+    cursor: pointer;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
+}
+
+.btn-primary {
+    background-color: green;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+}

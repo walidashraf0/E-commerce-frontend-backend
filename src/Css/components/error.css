@@ -1,0 +1,13 @@
+.error {
+    width: 80%;
+    background-color: #f8d7da;
+    color: #842029;
+    padding: 15px 20px;
+    margin-top: 20px;
+    display: block;
+    border-radius: 12px;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    -ms-border-radius: 12px;
+    -o-border-radius: 12px;
+}
