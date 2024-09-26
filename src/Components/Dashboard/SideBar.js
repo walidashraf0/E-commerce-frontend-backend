@@ -8,7 +8,8 @@ import { WindowSize } from "../../Context/WindowContext";
 
 export default function SideBar() {
   const menu = useContext(Menu);
-  const windowSize = useContext(WindowSize);
+  const windowContext = useContext(WindowSize);
+  const windowSize = windowContext.windowSize;
   console.log(windowSize);
 
   const isOpen = menu.isOpen;
@@ -17,7 +18,7 @@ export default function SideBar() {
     <>
       <div
         className="sidebar pt-3"
-        style={{ width: isOpen ? "240px" : "fit-content" }}>
+        style={{ width: isOpen ? "240px" : "fit-content", left: windowSize < "768" ? (isOpen ? 0 : "-100%") : 0, transition: "0.4s" }}>
         <NavLink
           to={"users"}
           className="d-flex align-items-center gap-2 sidebar-link">

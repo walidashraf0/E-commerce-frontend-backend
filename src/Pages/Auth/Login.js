@@ -5,6 +5,7 @@ import Loading from "../../Components/Loading/Loading";
 import Cookie from "cookie-universal";
 import "../../Css/components/google.css";
 import Form from "react-bootstrap/Form";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   // States
@@ -12,6 +13,8 @@ export default function Login() {
     email: "",
     password: "",
   });
+
+  const navigate = useNavigate();
 
   // Loading state
   const [loading, setLoading] = useState(false);
@@ -39,7 +42,8 @@ export default function Login() {
       setLoading(false);
       const token = res.data.token;
       cookie.set("e-commerce", token);
-      window.location.pathname = "/users";
+      navigate("/dashboard", { replace: true });
+      // window.location.pathname = "/users";
       // console.log("Success");
     } catch (err) {
       setLoading(false);
@@ -59,7 +63,9 @@ export default function Login() {
           <Form className="form" onSubmit={handleSubmit}>
             <div className="custom-form">
               <h1>Login Now</h1>
-              <Form.Group className="form-custom" controlId="exampleForm.ControlInput1">
+              <Form.Group
+                className="form-custom"
+                controlId="exampleForm.ControlInput1">
                 <Form.Control
                   name="email"
                   type="email"
@@ -71,7 +77,9 @@ export default function Login() {
                 <Form.Label>Email:</Form.Label>
               </Form.Group>
 
-              <Form.Group className="form-custom" controlId="exampleForm.ControlInput2">
+              <Form.Group
+                className="form-custom"
+                controlId="exampleForm.ControlInput2">
                 <Form.Control
                   name="password"
                   type="password"

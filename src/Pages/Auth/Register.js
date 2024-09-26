@@ -5,7 +5,7 @@ import Loading from "../../Components/Loading/Loading";
 import Cookie from "cookie-universal";
 import Form from "react-bootstrap/Form";
 import "../../Css/components/google.css";
-
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
   // States
@@ -14,6 +14,8 @@ export default function Register() {
     email: "",
     password: "",
   });
+
+  const navigate = useNavigate();
 
   // Loading state
   const [loading, setLoading] = useState(false);
@@ -37,7 +39,8 @@ export default function Register() {
       const res = await axios.post(`${baseUrl}/${REGISTER}`, form);
       const token = res.data.token;
       cookie.set("e-commerce", token);
-      window.location.pathname = "/login";
+      navigate("/login", { replace: true });
+      // window.location.pathname = "/login";
       setLoading(false);
       console.log("Success");
     } catch (err) {
