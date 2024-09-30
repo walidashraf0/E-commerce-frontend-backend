@@ -6,6 +6,8 @@ export const LOGOUT = "logout";
 
 // Users
 export const USERS = "users";
+//User
+export const USER = "user";
 
 // GoogleCallBack
 export const GOOGLE_CALL_BACK = "auth/google/callback";
