@@ -1,9 +1,9 @@
 import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import Cookie from "cookie-universal";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { baseUrl, USER } from "../../Api/Api";
+import { USER } from "../../Api/Api";
 import Loading from "../../Components/Loading/Loading";
+import { Axios } from "../../Api/Axios";
 
 export default function RequireAuth() {
   const navigate = useNavigate();
@@ -12,12 +12,7 @@ export default function RequireAuth() {
   const [user, setUser] = useState("");
 
   useEffect(() => {
-    axios
-      .get(`${baseUrl}/${USER}`, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
+    Axios.get(`/${USER}`)
       .then((data) => setUser(data.data))
       .catch(() => navigate("/login", { replace: true }));
   }, []);

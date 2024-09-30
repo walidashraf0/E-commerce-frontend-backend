@@ -1,6 +1,6 @@
-import axios from "axios";
-import { baseUrl, LOGOUT } from "../../Api/Api";
+import { LOGOUT } from "../../Api/Api";
 import Cookie from "cookie-universal";
+import { Axios } from "../../Api/Axios";
 
 export default function Logout() {
   // Cookie
@@ -9,11 +9,7 @@ export default function Logout() {
   const token = cookie.get("e-commerce");
   const handleLogout = async () => {
     try {
-      const res = await axios.get(`${baseUrl}/${LOGOUT}`, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      });
+      const res = await Axios.get(`/${LOGOUT}`);
       console.log(res);
       window.location.pathname = "/login";
     } catch (err) {
@@ -23,7 +19,9 @@ export default function Logout() {
 
   return (
     <>
-      <button className="btn btn-secondary" onClick={handleLogout}>Logout</button>
+      <button className="btn btn-secondary" onClick={handleLogout}>
+        Logout
+      </button>
     </>
   );
 }

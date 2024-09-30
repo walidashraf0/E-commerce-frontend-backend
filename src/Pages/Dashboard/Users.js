@@ -1,24 +1,13 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { baseUrl, USERS } from "../../Api/Api";
-import Cookie from "cookie-universal";
+import { USERS } from "../../Api/Api";
 import { Table } from "react-bootstrap";
+import { Axios } from "../../Api/Axios";
 export default function Users() {
   const [users, setUsers] = useState([]);
 
-  // Cookie
-  const cookie = Cookie();
-
-  const token = cookie.get("e-commerce");
 
   useEffect(() => {
-    // const token = res.data.token;
-    axios
-      .get(`${baseUrl}/${USERS}`, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
+    Axios.get(`/${USERS}`)
       .then((data) => setUsers(data.data))
       .catch((err) => console.log(err));
   }, []);
