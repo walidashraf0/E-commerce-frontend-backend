@@ -11,14 +11,28 @@ export default function SideBar() {
   const windowContext = useContext(WindowSize);
   const windowSize = windowContext.windowSize;
   console.log(windowSize);
-
   const isOpen = menu.isOpen;
 
   return (
     <>
       <div
+        style={{
+          position: "fixed",
+          top: "70px",
+          left: "0",
+          width: "100%",
+          height: "100vh",
+          backgroundColor: "rgba(0, 0, 0, 0.2)",
+          display: windowSize < "768" && isOpen ? "block" : "none",
+        }}></div>
+      <div
         className="sidebar pt-3"
-        style={{ width: isOpen ? "240px" : "fit-content", left: windowSize < "768" ? (isOpen ? 0 : "-100%") : 0, transition: "0.4s" }}>
+        style={{
+          width: isOpen ? "240px" : "fit-content",
+          left: windowSize < "768" ? (isOpen ? 0 : "-100%") : 0,
+          transition: "0.4s",
+          position: windowSize < "768" ? "fixed" : "sticky",
+        }}>
         <NavLink
           to={"users"}
           className="d-flex align-items-center gap-2 sidebar-link">
