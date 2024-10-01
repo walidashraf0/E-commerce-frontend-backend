@@ -7,6 +7,7 @@ import Users from "./Pages/Dashboard/Users";
 import GoogleCallBack from "./Pages/Auth/GoogleCallBack";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import RequireAuth from "./Pages/Auth/RequireAuth";
+import User from "./Pages/Dashboard/User";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route element={<RequireAuth />}>
           <Route path="dashboard" element={<Dashboard />}>
             <Route path="users" element={<Users />} />
+            <Route path="users/:id" element={<User />} />
           </Route>
         </Route>
       </Routes>
