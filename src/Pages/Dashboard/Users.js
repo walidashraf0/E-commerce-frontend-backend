@@ -9,17 +9,22 @@ export default function Users() {
   const [users, setUsers] = useState([]);
   const [currentUser, setCurrentUser] = useState("");
   const [deleted, setDeleted] = useState(false);
+  const [noUsers, setNoUsers] = useState(false);
 
-  useEffect(() => {
-    Axios.get(`/${USERS}`)
-      .then((data) => setUsers(data.data))
-      .catch((err) => console.log(err));
-  }, [deleted]);
-
+  // Get Current User
   useEffect(() => {
     Axios.get(`${USER}`).then((data) => setCurrentUser(data.data));
   }, []);
 
+  //Get All Users
+  useEffect(() => {
+    Axios.get(`/${USERS}`)
+      .then((data) => setUsers(data.data))
+      .then(() => setNoUsers(true))
+      .catch((err) => console.log(err));
+  }, [deleted]);
+
+  //Filter Current User
   const userFilter = users.filter((user) => user.id !== currentUser.id);
 
   // Display Users
@@ -75,6 +80,12 @@ export default function Users() {
               <tr>
                 <td className="text-center" colSpan={12}>
                   Loading...
+                </td>
+              </tr>
+            ) : users.length <= 1 && noUsers === true ? (
+              <tr>
+                <td className="text-center" colSpan={12}>
+                  Users Not Found
                 </td>
               </tr>
             ) : (
