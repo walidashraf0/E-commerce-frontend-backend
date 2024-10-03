@@ -12,7 +12,7 @@ export default function SideBar() {
   const menu = useContext(Menu);
   const windowContext = useContext(WindowSize);
   const windowSize = windowContext.windowSize;
-  console.log(windowSize);
+  // console.log(windowSize);
   const isOpen = menu.isOpen;
 
   //User

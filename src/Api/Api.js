@@ -6,10 +6,12 @@ export const LOGOUT = "logout";
 
 // Users
 export const USERS = "users";
-//User
+// User
 export const USER = "user";
-//User
+// Categories
 export const CATEGORIES = "categories";
+// Category
+export const CATEGORY = "category";
 
 // GoogleCallBack
 export const GOOGLE_CALL_BACK = "auth/google/callback";
