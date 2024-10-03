@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { USER } from "../../Api/Api";
@@ -13,8 +13,15 @@ export default function AddUser() {
   const [role, setRole] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // ID
-  const id = Number(window.location.pathname.replace("/dashboard/users/", ""));
+
+  const focus = useRef("");
+  // handle Focus With Ref
+  useEffect(() => {
+    focus.current.focus();
+  }, []);
+
+  // // ID
+  // const id = Number(window.location.pathname.replace("/dashboard/users/", ""));
 
   const handleSubmit = async (e) => {
     setLoading(true);
@@ -48,6 +55,7 @@ export default function AddUser() {
               required
               onChange={(e) => setName(e.target.value)}
               placeholder="name..."
+              ref={focus}
             />
           </Form.Group>
 
@@ -58,7 +66,7 @@ export default function AddUser() {
               value={email}
               required
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="name@example.com"
+              placeholder="email@example.com"
             />
           </Form.Group>
 

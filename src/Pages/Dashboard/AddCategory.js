@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../Components/Loading/Loading";
 import { Form } from "react-bootstrap";
@@ -11,6 +11,12 @@ export default function AddCategory() {
   const [title, setTitle] = useState("");
   const [image, setImage] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const focus = useRef("");
+  // handle Focus With Ref
+  useEffect(() => {
+    focus.current.focus();
+  }, []);
 
   const handleSubmit = async (e) => {
     setLoading(true);
@@ -45,6 +51,7 @@ export default function AddCategory() {
               required
               onChange={(e) => setTitle(e.target.value)}
               placeholder="title..."
+              ref={focus}
             />
           </Form.Group>
 
