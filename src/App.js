@@ -14,6 +14,8 @@ import Err404 from "./Pages/Auth/Err404";
 import RequireBack from "./Pages/Auth/RequireBack";
 import Categories from "./Pages/Dashboard/Categories";
 import AddCategory from "./Pages/Dashboard/AddCategory";
+import Category from "./Pages/Dashboard/Category";
+import Test from "./Pages/Website/Test";
 
 function App() {
   return (
@@ -21,6 +23,7 @@ function App() {
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Home />} />
+        <Route path="/test" element={<Test />} />
         <Route element={<RequireBack />}>
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
@@ -38,6 +41,7 @@ function App() {
             <Route element={<RequireAuth allowedRole={["1999", "1995"]} />}>
               <Route path="categories" element={<Categories />} />
               <Route path="category/add" element={<AddCategory />} />
+              <Route path="categories/:id" element={<Category />} />
             </Route>
             <Route element={<RequireAuth allowedRole={["1992", "1995"]} />}>
               <Route path="viewer" element={<Viewer />} />

@@ -9,14 +9,14 @@ export default function TableShow(props) {
   };
   // Header Show
   const headerShow = props.header.map((header, key) => (
-    <th key={key}>{header.name}</th>
+    <th key={key} style={{ textAlign: "center" }}>{header.name}</th>
   ));
   // Body Show
   const dataShow = props.data.map((item, key) => (
     <tr key={key}>
-      <td>{key + 1}</td>
+      <td style={{ textAlign: "center" }}>{key + 1}</td>
       {props.header.map((item2, key2) => (
-        <td key={key2}>
+        <td key={key2} style={{ textAlign: "center" }}>
           {item2.key === "image" ? (
             <img width="50px" src={item[item2.key]} alt="Category-Image" />
           ) : item[item2.key] === "1995" ? (
@@ -74,9 +74,9 @@ export default function TableShow(props) {
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>ID</th>
+            <th style={{ textAlign: "center" }}>ID</th>
             {headerShow}
-            <th>Action</th>
+            <th style={{ textAlign: "center" }}>Action</th>
           </tr>
         </thead>
         <tbody>

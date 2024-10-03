@@ -1,42 +1,59 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Loading from "../../Components/Loading/Loading";
 import { Form } from "react-bootstrap";
-import { Axios } from "../../Api/Axios";
+import Loading from "../../Components/Loading/Loading";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { CATEGORY } from "../../Api/Api";
+import { Axios } from "../../Api/Axios";
 
-export default function AddCategory() {
+export default function Category() {
   const navigate = useNavigate();
-
   const [title, setTitle] = useState("");
   const [image, setImage] = useState("");
+  const [disable, setDisable] = useState(true);
   const [loading, setLoading] = useState(false);
 
+  // ID
+  const { id } = useParams();
+  // const id = Number(window.location.pathname.replace("/dashboard/categories/", ""));
+
+  // Get User Data
+  useEffect(() => {
+    setLoading(true);
+    Axios.get(`/${CATEGORY}/${id}`)
+      .then((data) => {
+        setTitle(data.data.title);
+        // setImage(data.data.image);
+        setLoading(false);
+      })
+      .then(() => {
+        setDisable(false);
+        // setLoading(false);
+      })
+      .catch(() => navigate("/dashboard/categories/Err404", { replace: true }));
+  }, []);
+
+  // Submit New Data
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
-    // For Sending Image
     const form = new FormData();
     form.append("title", title);
     form.append("image", image);
     try {
-      const res = await Axios.post(`${CATEGORY}/add`, form).then(() =>
-        setLoading(false)
-      );
+      const res = await Axios.post(`${CATEGORY}/edit/${id}`, form);
       navigate("/dashboard/categories");
     } catch (err) {
       setLoading(false);
       console.log(err);
     }
   };
-
   return (
     <>
       {loading ? (
         <Loading />
       ) : (
         <Form className="bg-white w-100 mx-2 p-3" onSubmit={handleSubmit}>
-          <h1>Add User</h1>
+          <h1>Edit Category Info</h1>
           <Form.Group className="mb-3" controlId="exampleForm.ControlText1">
             <Form.Label>Title</Form.Label>
             <Form.Control
@@ -48,19 +65,16 @@ export default function AddCategory() {
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="image">
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>Image</Form.Label>
             <Form.Control
               type="file"
-              //   value={image}
-              //   required
+              required
               onChange={(e) => setImage(e.target.files.item(0))}
             />
           </Form.Group>
 
-          <button
-            disabled={title.length > 1 ? false : true}
-            className="btn btn-primary">
+          <button disabled={disable} className="btn btn-primary">
             Save
           </button>
         </Form>

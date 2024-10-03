@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 import { Axios } from "../../Api/Axios";
 import { USER } from "../../Api/Api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../../Components/Loading/Loading";
 
 export default function User() {
@@ -14,7 +14,7 @@ export default function User() {
   const [loading, setLoading] = useState(false);
 
   // ID
-  const id = Number(window.location.pathname.replace("/dashboard/users/", ""));
+  const { id } = useParams();
 
   // Get User Data
   useEffect(() => {
