@@ -41,9 +41,10 @@ export default function Login() {
       });
       setLoading(false);
       const token = res.data.token;
+      const role = res.data.user.role;
+      const go = role === "1995" ? "users" : "viewer";
       cookie.set("e-commerce", token);
-      window.location.pathname = "/dashboard/users";
-      // window.location.pathname = "/users";
+      window.location.pathname = `/dashboard/${go}`;
       // console.log("Success");
     } catch (err) {
       setLoading(false);

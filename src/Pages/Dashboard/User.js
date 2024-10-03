@@ -11,23 +11,26 @@ export default function User() {
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
   const [disable, setDisable] = useState(true);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   // ID
   const id = Number(window.location.pathname.replace("/dashboard/users/", ""));
 
   // Get User Data
   useEffect(() => {
+    setLoading(true);
     Axios.get(`/${USER}/${id}`)
       .then((data) => {
         setName(data.data.name);
         setEmail(data.data.email);
         setRole(data.data.role);
+        setLoading(false);
       })
       .then(() => {
         setDisable(false);
-        setLoading(false);
-      });
+        // setLoading(false);
+      })
+      .catch(() => navigate("/dashboard/user/Err404", { replace: true }));
   }, []);
 
   const handleSubmit = async (e) => {
@@ -76,7 +79,9 @@ export default function User() {
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
             <Form.Label>Role</Form.Label>
             <Form.Select value={role} onChange={(e) => setRole(e.target.value)}>
-              <option disabled value={""}>Select Role</option>
+              <option disabled value={""}>
+                Select Role
+              </option>
               <option value={1995}>Admin</option>
               <option value={2001}>User</option>
               <option value={1992}>Viewer</option>

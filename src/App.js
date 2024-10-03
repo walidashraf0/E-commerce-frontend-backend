@@ -11,6 +11,7 @@ import User from "./Pages/Dashboard/User";
 import AddUser from "./Pages/Dashboard/AddUser";
 import Viewer from "./Pages/Dashboard/Viewer";
 import Err404 from "./Pages/Auth/Err404";
+import RequireBack from "./Pages/Auth/RequireBack";
 
 function App() {
   return (
@@ -18,8 +19,10 @@ function App() {
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Home />} />
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
+        <Route element={<RequireBack />}>
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+        </Route>
         <Route path="/auth/google/callback" element={<GoogleCallBack />} />
         <Route path="/*" element={<Err404 />} />
         {/* Protected Routes */}
