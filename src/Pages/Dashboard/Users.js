@@ -24,16 +24,25 @@ export default function Users() {
       .catch((err) => console.log(err));
   }, [deleted]);
 
-  //Filter Current User
-  const userFilter = users.filter((user) => user.id !== currentUser.id);
+  // //Filter Current User
+  // const userFilter = users.filter((user) => user.id !== currentUser.id);
 
   // Display Users
-  const displayUsers = userFilter.map((user, key) => (
+  const displayUsers = users.map((user, key) => (
     <tr key={key}>
       <td>{key + 1}</td>
-      <td>{user.name}</td>
+      <td>
+        {user.name === currentUser.name ? user.name + " (You)" : user.name}
+      </td>
       <td>{user.email}</td>
       <td>
+        {user.role === "1995"
+          ? "Admin"
+          : user.role === "2001"
+          ? "User"
+          : "Viewer"}
+      </td>
+      <td style={{ textAlign: "center" }}>
         <div className="d-flex justify-content-center align-items-center gap-3">
           <Link to={`${user.id}`}>
             <FontAwesomeIcon
@@ -42,36 +51,48 @@ export default function Users() {
               icon={faPenToSquare}
             />
           </Link>
-          <FontAwesomeIcon
-            onClick={() => handleDelete(user.id)}
-            fontSize={"19px"}
-            color="red"
-            icon={faTrash}
-            cursor={"pointer"}
-          />
+          {user.name === currentUser.name ? (
+            ""
+          ) : (
+            <FontAwesomeIcon
+              onClick={() => handleDelete(user.id)}
+              fontSize={"19px"}
+              color="red"
+              icon={faTrash}
+              cursor={"pointer"}
+            />
+          )}
         </div>
       </td>
     </tr>
   ));
 
   const handleDelete = async (id) => {
-    try {
-      const res = await Axios.delete(`${USER}/${id}`);
-      setDeleted((prev) => !prev);
-    } catch (err) {
-      console.log(err);
+    if (currentUser.id !== id) {
+      try {
+        const res = await Axios.delete(`${USER}/${id}`);
+        setDeleted((prev) => !prev);
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
   return (
     <>
       <div className="bg-white w-100 p-2">
-        <h1>Users Page</h1>
+        <div className="d-flex align-items-center justify-content-between">
+          <h1>Users Page</h1>
+          <Link className="btn btn-primary" to="/dashboard/user/add">
+            Add User
+          </Link>
+        </div>
         <Table striped bordered hover>
           <thead>
             <tr>
               <th>ID</th>
               <th>User Name</th>
               <th>Email</th>
+              <th>Role</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -82,7 +103,7 @@ export default function Users() {
                   Loading...
                 </td>
               </tr>
-            ) : users.length <= 1 && noUsers === true ? (
+            ) : users.length === 0 && noUsers === true ? (
               <tr>
                 <td className="text-center" colSpan={12}>
                   Users Not Found

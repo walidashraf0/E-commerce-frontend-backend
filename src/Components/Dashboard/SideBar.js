@@ -1,10 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./bars.css";
-import { faUsers } from "@fortawesome/free-solid-svg-icons";
-import { NavLink } from "react-router-dom";
+import { faUserPlus, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Menu } from "../../Context/MenuContext";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { WindowSize } from "../../Context/WindowContext";
+import { Axios } from "../../Api/Axios";
+import { USER } from "../../Api/Api";
 
 export default function SideBar() {
   const menu = useContext(Menu);
@@ -12,6 +14,16 @@ export default function SideBar() {
   const windowSize = windowContext.windowSize;
   console.log(windowSize);
   const isOpen = menu.isOpen;
+
+  //User
+  const [user, setUser] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    Axios.get(`/${USER}`)
+      .then((data) => setUser(data.data))
+      .catch(() => navigate("/login", { replace: true }));
+  }, []);
 
   return (
     <>
@@ -33,39 +45,59 @@ export default function SideBar() {
           transition: "0.4s",
           position: windowSize < "768" ? "fixed" : "sticky",
         }}>
-        <NavLink
-          to={"users"}
-          className="d-flex align-items-center gap-2 sidebar-link">
-          <FontAwesomeIcon
-            icon={faUsers}
-            style={{ padding: isOpen ? "10px 15px" : "10px 13px" }}
-          />
-          <p className="m-0" style={{ display: isOpen ? "block" : "none" }}>
-            Users
-          </p>
-        </NavLink>
-        <NavLink
-          to={"products"}
-          className="d-flex align-items-center gap-2 sidebar-link">
-          <FontAwesomeIcon
-            icon={faUsers}
-            style={{ padding: isOpen ? "10px 15px" : "10px 13px" }}
-          />
-          <p className="m-0" style={{ display: isOpen ? "block" : "none" }}>
-            Products
-          </p>
-        </NavLink>
-        <NavLink
-          to={"anything"}
-          className="d-flex align-items-center gap-2 sidebar-link">
-          <FontAwesomeIcon
-            icon={faUsers}
-            style={{ padding: isOpen ? "10px 15px" : "10px 13px" }}
-          />
-          <p className="m-0" style={{ display: isOpen ? "block" : "none" }}>
-            Anything
-          </p>
-        </NavLink>
+        {user.role === "1995" ? (
+          <>
+            <NavLink
+              to={"users"}
+              className="d-flex align-items-center gap-2 sidebar-link">
+              <FontAwesomeIcon
+                icon={faUsers}
+                style={{ padding: isOpen ? "10px 15px" : "10px 13px" }}
+              />
+              <p className="m-0" style={{ display: isOpen ? "block" : "none" }}>
+                Users
+              </p>
+            </NavLink>
+
+            <NavLink
+              to={"/dashboard/user/add"}
+              className="d-flex align-items-center gap-2 sidebar-link">
+              <FontAwesomeIcon
+                icon={faUserPlus}
+                style={{ padding: isOpen ? "10px 15px" : "10px 13px" }}
+              />
+              <p className="m-0" style={{ display: isOpen ? "block" : "none" }}>
+                Add User
+              </p>
+            </NavLink>
+
+            <NavLink
+              to={"/dashboard/viewer"}
+              className="d-flex align-items-center gap-2 sidebar-link">
+              <FontAwesomeIcon
+                icon={faUsers}
+                style={{ padding: isOpen ? "10px 15px" : "10px 13px" }}
+              />
+              <p className="m-0" style={{ display: isOpen ? "block" : "none" }}>
+                Viewer
+              </p>
+            </NavLink>
+          </>
+        ) : user.role === "1992" ? (
+          <NavLink
+            to={"/dashboard/viewer"}
+            className="d-flex align-items-center gap-2 sidebar-link">
+            <FontAwesomeIcon
+              icon={faUsers}
+              style={{ padding: isOpen ? "10px 15px" : "10px 13px" }}
+            />
+            <p className="m-0" style={{ display: isOpen ? "block" : "none" }}>
+              Viewer
+            </p>
+          </NavLink>
+        ) : (
+          ""
+        )}
       </div>
     </>
   );

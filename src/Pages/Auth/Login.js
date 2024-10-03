@@ -42,7 +42,7 @@ export default function Login() {
       setLoading(false);
       const token = res.data.token;
       cookie.set("e-commerce", token);
-      navigate("/dashboard", { replace: true });
+      window.location.pathname = "/dashboard/users";
       // window.location.pathname = "/users";
       // console.log("Success");
     } catch (err) {

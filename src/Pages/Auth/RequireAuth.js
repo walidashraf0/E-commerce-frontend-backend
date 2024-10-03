@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import { USER } from "../../Api/Api";
 import Loading from "../../Components/Loading/Loading";
 import { Axios } from "../../Api/Axios";
+import Err403 from "./Err403";
 
-export default function RequireAuth() {
+export default function RequireAuth({ allowedRole }) {
   const navigate = useNavigate();
 
   //User
@@ -13,7 +14,10 @@ export default function RequireAuth() {
 
   useEffect(() => {
     Axios.get(`/${USER}`)
-      .then((data) => setUser(data.data))
+      .then((data) => {
+        setUser(data.data);
+        console.log(data.data);
+      })
       .catch(() => navigate("/login", { replace: true }));
   }, []);
 
@@ -21,17 +25,15 @@ export default function RequireAuth() {
   const cookie = Cookie();
   const token = cookie.get("e-commerce");
 
-  return (
-    <>
-      {token ? (
-        user === "" ? (
-          <Loading />
-        ) : (
-          <Outlet />
-        )
-      ) : (
-        <Navigate to={"/login"} replace={true} />
-      )}
-    </>
+  return token ? (
+    user === "" ? (
+      <Loading />
+    ) : allowedRole.includes(user.role) ? (
+      <Outlet />
+    ) : (
+      <Err403 />
+    )
+  ) : (
+    <Navigate to={"/login"} replace={true} />
   );
 }
