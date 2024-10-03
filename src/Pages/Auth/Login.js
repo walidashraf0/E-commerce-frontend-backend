@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { baseUrl, LOGIN } from "../../Api/Api";
 import Loading from "../../Components/Loading/Loading";
 import Cookie from "cookie-universal";
@@ -13,6 +13,12 @@ export default function Login() {
     email: "",
     password: "",
   });
+
+  const focus = useRef("");
+  // handle Focus With Ref
+  useEffect(() => {
+    focus.current.focus();
+  }, []);
 
   const navigate = useNavigate();
 
@@ -74,6 +80,7 @@ export default function Login() {
                   onChange={handleChange}
                   required
                   placeholder="name@example.com"
+                  ref={focus}
                 />
                 <Form.Label>Email:</Form.Label>
               </Form.Group>

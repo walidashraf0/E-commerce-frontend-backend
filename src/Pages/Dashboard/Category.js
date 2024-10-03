@@ -1,7 +1,7 @@
 import { Form } from "react-bootstrap";
 import Loading from "../../Components/Loading/Loading";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CATEGORY } from "../../Api/Api";
 import { Axios } from "../../Api/Axios";
 
@@ -11,6 +11,12 @@ export default function Category() {
   const [image, setImage] = useState("");
   const [disable, setDisable] = useState(true);
   const [loading, setLoading] = useState(false);
+
+  const focus = useRef("");
+  // handle Focus With Ref
+  useEffect(() => {
+    focus.current.focus();
+  }, []);
 
   // ID
   const { id } = useParams();
@@ -62,6 +68,7 @@ export default function Category() {
               required
               onChange={(e) => setTitle(e.target.value)}
               placeholder="title..."
+              ref={focus}
             />
           </Form.Group>
 

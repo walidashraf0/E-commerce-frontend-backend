@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { baseUrl, REGISTER } from "../../Api/Api";
 import Loading from "../../Components/Loading/Loading";
 import Cookie from "cookie-universal";
@@ -14,6 +14,12 @@ export default function Register() {
     email: "",
     password: "",
   });
+
+  const focus = useRef("");
+  // handle Focus With Ref
+  useEffect(() => {
+    focus.current.focus();
+  }, []);
 
   const navigate = useNavigate();
 
@@ -72,6 +78,7 @@ export default function Register() {
                   onChange={handleChange}
                   placeholder="Enter Your Name..."
                   required
+                  ref={focus}
                 />
                 <Form.Label>Name:</Form.Label>
               </Form.Group>

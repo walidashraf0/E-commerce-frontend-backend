@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Form } from "react-bootstrap";
 import { Axios } from "../../Api/Axios";
 import { USER } from "../../Api/Api";
@@ -12,6 +12,13 @@ export default function User() {
   const [role, setRole] = useState("");
   const [disable, setDisable] = useState(true);
   const [loading, setLoading] = useState(false);
+
+
+  const focus = useRef("");
+  // handle Focus With Ref
+  useEffect(() => {
+    focus.current.focus();
+  }, []);
 
   // ID
   const { id } = useParams();
@@ -64,6 +71,7 @@ export default function User() {
               required
               onChange={(e) => setName(e.target.value)}
               placeholder="name..."
+              ref={focus}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
