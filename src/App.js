@@ -9,8 +9,8 @@ import Dashboard from "./Pages/Dashboard/Dashboard";
 import RequireAuth from "./Pages/Auth/RequireAuth";
 import User from "./Pages/Dashboard/User";
 import AddUser from "./Pages/Dashboard/AddUser";
-import Err403 from "./Pages/Auth/Err403";
 import Viewer from "./Pages/Dashboard/Viewer";
+import Err404 from "./Pages/Auth/Err404";
 
 function App() {
   return (
@@ -21,10 +21,10 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="/auth/google/callback" element={<GoogleCallBack />} />
+        <Route path="/*" element={<Err404 />} />
         {/* Protected Routes */}
-        {/* <Route element={<RequireAuth />}> */}
+        <Route element={<RequireAuth allowedRole={["1995", "1992"]} />}>
           <Route path="dashboard" element={<Dashboard />}>
-            {/* <Route path="403" element={<Err403 />} /> */}
             <Route element={<RequireAuth allowedRole={["1995"]} />}>
               <Route path="users" element={<Users />} />
               <Route path="users/:id" element={<User />} />
@@ -34,7 +34,7 @@ function App() {
               <Route path="viewer" element={<Viewer />} />
             </Route>
           </Route>
-        {/* </Route> */}
+        </Route>
       </Routes>
     </div>
   );
