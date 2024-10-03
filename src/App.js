@@ -12,6 +12,7 @@ import AddUser from "./Pages/Dashboard/AddUser";
 import Viewer from "./Pages/Dashboard/Viewer";
 import Err404 from "./Pages/Auth/Err404";
 import RequireBack from "./Pages/Auth/RequireBack";
+import Categories from "./Pages/Dashboard/Categories";
 
 function App() {
   return (
@@ -32,6 +33,9 @@ function App() {
               <Route path="users" element={<Users />} />
               <Route path="users/:id" element={<User />} />
               <Route path="user/add" element={<AddUser />} />
+            </Route>
+            <Route element={<RequireAuth allowedRole={["1999", "1995"]} />}>
+              <Route path="categories" element={<Categories />} />
             </Route>
             <Route element={<RequireAuth allowedRole={["1992", "1995"]} />}>
               <Route path="viewer" element={<Viewer />} />

@@ -1,24 +1,20 @@
-import { useEffect, useState } from "react";
-import { USER, USERS } from "../../Api/Api";
-import { Table } from "react-bootstrap";
-import { Axios } from "../../Api/Axios";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
-export default function Users() {
+import { Axios } from "../../Api/Axios";
+import { CATEGORIES } from "../../Api/Api";
+import { useEffect, useState } from "react";
+
+export default function Categories() {
   const [users, setUsers] = useState([]);
-  const [currentUser, setCurrentUser] = useState("");
   const [deleted, setDeleted] = useState(false);
   const [noUsers, setNoUsers] = useState(false);
 
-  // Get Current User
-  useEffect(() => {
-    Axios.get(`${USER}`).then((data) => setCurrentUser(data.data));
-  }, []);
 
-  //Get All Users
+  //Get All Categories
   useEffect(() => {
-    Axios.get(`/${USERS}`)
+    Axios.get(`/${CATEGORIES}`)
       .then((data) => setUsers(data.data))
       .then(() => setNoUsers(true))
       .catch((err) => console.log(err));
@@ -32,7 +28,7 @@ export default function Users() {
     <tr key={key}>
       <td>{key + 1}</td>
       <td>
-        {user.name === currentUser.name ? user.name + " (You)" : user.name}
+        {/* {user.name === currentUser.name ? user.name + " (You)" : user.name}
       </td>
       <td>{user.email}</td>
       <td>
@@ -42,7 +38,7 @@ export default function Users() {
           ? "User"
           : user.role === "1999"
           ? "Product Manger"
-          : "Viewer"}
+          : "Viewer"} */}
       </td>
       <td style={{ textAlign: "center" }}>
         <div className="d-flex justify-content-center align-items-center gap-3">
@@ -53,7 +49,7 @@ export default function Users() {
               icon={faPenToSquare}
             />
           </Link>
-          {user.name === currentUser.name ? (
+          {/* {user.name === currentUser.name ? (
             ""
           ) : (
             <FontAwesomeIcon
@@ -63,27 +59,27 @@ export default function Users() {
               icon={faTrash}
               cursor={"pointer"}
             />
-          )}
+          )} */}
         </div>
       </td>
     </tr>
   ));
 
-  const handleDelete = async (id) => {
-    if (currentUser.id !== id) {
-      try {
-        const res = await Axios.delete(`${USER}/${id}`);
-        setDeleted((prev) => !prev);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  };
-  return (
+  // const handleDelete = async (id) => {
+  //   if (currentUser.id !== id) {
+  //     try {
+  //       const res = await Axios.delete(`${CATEGORIES}/${id}`);
+  //       setDeleted((prev) => !prev);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  // };
+  return(
     <>
       <div className="bg-white w-100 p-2">
         <div className="d-flex align-items-center justify-content-between">
-          <h1>Users Page</h1>
+          <h1>Categories</h1>
           <Link className="btn btn-primary" to="/dashboard/user/add">
             Add User
           </Link>

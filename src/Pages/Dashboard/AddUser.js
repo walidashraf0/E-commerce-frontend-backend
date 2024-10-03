@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { USER } from "../../Api/Api";
@@ -17,7 +17,7 @@ export default function AddUser() {
   const id = Number(window.location.pathname.replace("/dashboard/users/", ""));
 
   const handleSubmit = async (e) => {
-    // setLoading(true);
+    setLoading(true);
     e.preventDefault();
     try {
       const res = await Axios.post(`${USER}/add`, {
@@ -25,7 +25,7 @@ export default function AddUser() {
         email: email,
         password: password,
         role: role,
-      });
+      }).then(() => setLoading(false));
       navigate("/dashboard/users");
     } catch (err) {
       setLoading(false);
@@ -84,6 +84,7 @@ export default function AddUser() {
               <option value={1995}>Admin</option>
               <option value={2001}>User</option>
               <option value={1992}>Viewer</option>
+              <option value={1999}>Product Manger</option>
             </Form.Select>
           </Form.Group>
           <button
