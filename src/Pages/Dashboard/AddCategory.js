@@ -42,7 +42,7 @@ export default function AddCategory() {
         <Loading />
       ) : (
         <Form className="bg-white w-100 mx-2 p-3" onSubmit={handleSubmit}>
-          <h1>Add User</h1>
+          <h1>Add Category</h1>
           <Form.Group className="mb-3" controlId="exampleForm.ControlText1">
             <Form.Label>Title</Form.Label>
             <Form.Control

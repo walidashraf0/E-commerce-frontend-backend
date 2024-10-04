@@ -8,10 +8,16 @@ export const LOGOUT = "logout";
 export const USERS = "users";
 // User
 export const USER = "user";
+
 // Categories
 export const CATEGORIES = "categories";
 // Category
 export const CATEGORY = "category";
+
+// products
+export const PRODUCTS = "products";
+// Product
+export const PRODUCT = "product";
 
 // GoogleCallBack
 export const GOOGLE_CALL_BACK = "auth/google/callback";
