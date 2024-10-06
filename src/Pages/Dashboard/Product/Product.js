@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Loading from "../../Components/Loading/Loading";
+import { useNavigate, useParams } from "react-router-dom";
+import Loading from "../../../Components/Loading/Loading";
 import { Button, Form } from "react-bootstrap";
-import { CATEGORIES, PRODUCT } from "../../Api/Api";
-import { Axios } from "../../Api/Axios";
+import { CATEGORIES, PRODUCT } from "../../../Api/Api";
+import { Axios } from "../../../Api/Axios";
 
-export default function AddProduct() {
+export default function Product() {
   const [form, setForm] = useState({
     category: "Select Category",
     title: "",
@@ -16,23 +16,15 @@ export default function AddProduct() {
     rating: "",
   });
 
-  // Ay Data
-  const dummyForm = {
-    category: null,
-    title: "dummy",
-    description: "dummy",
-    price: 222,
-    discount: 0,
-    About: "About",
-    rating: "rating",
-  };
   const [images, setImages] = useState([]);
+  const [imagesGet, setImagesGet] = useState([]);
 
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
-  const [id, setId] = useState();
-  const [sent, setSent] = useState(false);
+  const [idsGet, setIdsGet] = useState([]);
+  const { id } = useParams();
+  //   const [sent, setSent] = useState(false);
 
   const focus = useRef("");
   // handle Focus With Ref
@@ -59,7 +51,18 @@ export default function AddProduct() {
       .catch((err) => console.log(err));
   }, []);
 
-  // console.log(categories);
+  // Get Product Data
+  useEffect(() => {
+    setLoading(true);
+    Axios.get(`/${PRODUCT}/${id}`)
+      .then((data) => {
+        // console.log(data.data[0])
+        setForm(data.data[0]);
+        setImagesGet(data.data[0].images);
+        setLoading(false);
+      })
+      .catch(() => navigate("/dashboard/user/Err404", { replace: true }));
+  }, []);
 
   // handle Delete Image
   const handleImageDelete = async (id, img) => {
@@ -73,7 +76,6 @@ export default function AddProduct() {
     } catch (err) {
       console.log(err);
     }
-    console.log();
   };
 
   // Mapping
@@ -83,7 +85,29 @@ export default function AddProduct() {
     </option>
   ));
 
-  // console.log(...images);
+  const handleDeleteTwo = async (id) => {
+    setImagesGet((prev) => prev.filter((img) => img.id !== id));
+    setIdsGet((prev) => {
+      return [...prev, id];
+    });
+  };
+
+  const imagesEditShow = imagesGet.map((item, key) => (
+    <div key={key} className="border p-2 my-2 position-relative col-2">
+      <div className="d-flex align-items-center justify-content-start gap-2">
+        {/* <span>{item.name}</span> */}
+        <img className="m-1 w-100" src={item.image} alt="image-products" />
+      </div>
+      <div
+        className="position-absolute top-0 end-0 bg-danger rounded text-white"
+        style={{ cursor: "pointer" }}>
+        <p className="py-1 px-2 m-0" onClick={() => handleDeleteTwo(item.id)}>
+          X
+        </p>
+      </div>
+    </div>
+  ));
+
 
   const imagesShow = images.map((item, key) => (
     <div key={key} className="w-100 border p-2 my-2">
@@ -121,7 +145,12 @@ export default function AddProduct() {
     setLoading(true);
     e.preventDefault();
     try {
-      const res = await Axios.post(`${PRODUCT}/edit/${id}`, form);
+      for (let i = 0; i < idsGet.length; i++) {
+        await Axios.delete(`product-img/${idsGet[i]}`).then((data) => {
+          console.log(data);
+        });
+      }
+      await Axios.post(`${PRODUCT}/edit/${id}`, form);
       setLoading(false);
       navigate("/dashboard/products");
     } catch (err) {
@@ -130,25 +159,10 @@ export default function AddProduct() {
     }
   };
 
-  // handle submit form
-  const handleSubmitForm = async () => {
-    try {
-      const res = await Axios.post(`${PRODUCT}/add`, dummyForm);
-      setId(res.data.id);
-      console.log(res);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  // console.log(id);
-
   // handle Change
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-    setSent(true);
-    if (sent !== 1) {
-      handleSubmitForm();
-    }
+    // setSent(true);
   };
 
   const j = useRef(-1);
@@ -187,8 +201,8 @@ export default function AddProduct() {
       {loading ? (
         <Loading />
       ) : (
-        <Form className="bg-white w-100 mx-2 p-3" onSubmit={handleSubmit}>
-          <h1>Add Product</h1>
+        <Form className="bg-white w-100 px-4 py-3 rounded shadow-sm" onSubmit={handleSubmit}>
+          <h1>Edit Product Info</h1>
           <Form.Group className="mb-3" controlId="category">
             <Form.Label>Category</Form.Label>
             <Form.Select
@@ -213,7 +227,7 @@ export default function AddProduct() {
               required
               onChange={handleChange}
               placeholder="title..."
-              disabled={!sent}
+              //   disabled={!sent}
             />
           </Form.Group>
 
@@ -226,7 +240,7 @@ export default function AddProduct() {
               required
               onChange={handleChange}
               placeholder="description..."
-              disabled={!sent}
+              //   disabled={!sent}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="about">
@@ -238,7 +252,7 @@ export default function AddProduct() {
               required
               onChange={handleChange}
               placeholder="about..."
-              disabled={!sent}
+              //   disabled={!sent}
             />
           </Form.Group>
 
@@ -251,7 +265,7 @@ export default function AddProduct() {
               required
               onChange={handleChange}
               placeholder="discount..."
-              disabled={!sent}
+              //   disabled={!sent}
             />
           </Form.Group>
 
@@ -264,7 +278,7 @@ export default function AddProduct() {
               required
               onChange={handleChange}
               placeholder="price..."
-              disabled={!sent}
+              //   disabled={!sent}
             />
           </Form.Group>
 
@@ -277,7 +291,7 @@ export default function AddProduct() {
               required
               onChange={handleChange}
               placeholder="rating..."
-              disabled={!sent}
+              //   disabled={!sent}
             />
           </Form.Group>
 
@@ -288,7 +302,7 @@ export default function AddProduct() {
               hidden
               multiple
               type="file"
-              disabled={!sent}
+              //   disabled={!sent}
               onChange={handleImagesChange}
             />
           </Form.Group>
@@ -297,22 +311,22 @@ export default function AddProduct() {
             onClick={handleUploadImages}
             className="d-flex align-items-center justify-content-center gap-2 py-3 rounded mb-2 w-100 flex-column"
             style={{
-              border: !sent ? "2px dashed gray" : "2px dashed #80ACFE",
-              cursor: sent ? "pointer" : "",
+              border: "2px dashed #80ACFE",
+              cursor: "pointer",
             }}>
             <img
               width="100px"
-              src={require("../../Assets/upload.png")}
+              src={require("../../../Assets/upload.png")}
               alt="upload-image"
-              style={{ filter: !sent ? "grayscale(1)" : "" }}
             />
-            <p
-              className="fw-bold mb-0"
-              style={{ color: !sent ? "gray" : "#80ACFE" }}>
+            <p className="fw-bold mb-0" style={{ color: "#80ACFE" }}>
               Upload Images
             </p>
           </div>
 
+          <div className="d-flex align-items-start flex-wrap gap-2">
+            {imagesEditShow}
+          </div>
           <div className="d-flex align-items-start flex-column gap-2">
             {imagesShow}
           </div>

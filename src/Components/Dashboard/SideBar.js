@@ -38,7 +38,7 @@ export default function SideBar() {
           display: windowSize < "768" && isOpen ? "block" : "none",
         }}></div>
       <div
-        className="sidebar pt-3"
+        className="sidebar pt-3 rounded shadow-sm"
         style={{
           width: isOpen ? "240px" : "fit-content",
           left: windowSize < "768" ? (isOpen ? 0 : "-100%") : 0,

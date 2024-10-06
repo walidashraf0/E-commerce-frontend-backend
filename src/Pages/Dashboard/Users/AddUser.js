@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { USER } from "../../Api/Api";
-import { Axios } from "../../Api/Axios";
-import Loading from "../../Components/Loading/Loading";
+import { USER } from "../../../Api/Api";
+import { Axios } from "../../../Api/Axios";
+import Loading from "../../../Components/Loading/Loading";
 
 export default function AddUser() {
   const navigate = useNavigate();
@@ -12,7 +12,6 @@ export default function AddUser() {
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
   const [loading, setLoading] = useState(false);
-
 
   const focus = useRef("");
   // handle Focus With Ref
@@ -45,7 +44,7 @@ export default function AddUser() {
       {loading ? (
         <Loading />
       ) : (
-        <Form className="bg-white w-100 mx-2 p-3" onSubmit={handleSubmit}>
+        <Form className="bg-white w-100 px-4 py-3 rounded shadow-sm" onSubmit={handleSubmit}>
           <h1>Add User</h1>
           <Form.Group className="mb-3" controlId="exampleForm.ControlText1">
             <Form.Label>Name</Form.Label>

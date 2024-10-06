@@ -4,12 +4,13 @@ import "./index.css";
 import "./Css/components/button.css";
 import "./Css/components/loading.css";
 import "./Css/components/error.css";
-import "./Pages/Auth/auth.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
 import MenuContext from "./Context/MenuContext";
 import WindowContext from "./Context/WindowContext";
+import "./Pages/Auth/AuthOperations/Auth.css";
+import "./custom.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

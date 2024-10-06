@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
-import { baseUrl, REGISTER } from "../../Api/Api";
-import Loading from "../../Components/Loading/Loading";
+import { baseUrl, REGISTER } from "../../../Api/Api";
+import Loading from "../../../Components/Loading/Loading";
 import Cookie from "cookie-universal";
-import Form from "react-bootstrap/Form";
-import "../../Css/components/google.css";
+import "../../../Css/components/google.css";
 import { useNavigate } from "react-router-dom";
+import { Form } from "react-bootstrap";
 
 export default function Register() {
   // States

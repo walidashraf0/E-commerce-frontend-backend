@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { USER, USERS } from "../../Api/Api";
-import { Axios } from "../../Api/Axios";
+import { USER, USERS } from "../../../Api/Api";
+import { Axios } from "../../../Api/Axios";
 import { Link } from "react-router-dom";
-import TableShow from "../../Components/Dashboard/TableShow";
+import TableShow from "../../../Components/Dashboard/TableShow";
 export default function Users() {
   const [users, setUsers] = useState([]);
   const [currentUser, setCurrentUser] = useState("");
@@ -35,8 +35,6 @@ export default function Users() {
     },
   ];
 
-  
-
   // //Filter Current User
   // const userFilter = users.filter((user) => user.id !== currentUser.id);
 
@@ -52,14 +50,19 @@ export default function Users() {
 
   return (
     <>
-      <div className="bg-white w-100 p-2">
+      <div className="bg-white w-100 px-4 py-3 rounded shadow-sm">
         <div className="d-flex align-items-center justify-content-between">
           <h1>Users Page</h1>
           <Link className="btn btn-primary" to="/dashboard/user/add">
             Add User
           </Link>
         </div>
-        <TableShow header={header} data={users} delete={handleDelete} currentUser={currentUser} />
+        <TableShow
+          header={header}
+          data={users}
+          delete={handleDelete}
+          currentUser={currentUser}
+        />
       </div>
     </>
   );

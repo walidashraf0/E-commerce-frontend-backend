@@ -1,22 +1,22 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Home from "./Pages/Website/Home";
-import Login from "./Pages/Auth/Login";
-import Register from "./Pages/Auth/Register";
-import Users from "./Pages/Dashboard/Users";
-import GoogleCallBack from "./Pages/Auth/GoogleCallBack";
+import Login from "./Pages/Auth/AuthOperations/Login";
+import Register from "./Pages/Auth/AuthOperations/Register";
+import Users from "./Pages/Dashboard/Users/Users";
+import GoogleCallBack from "./Pages/Auth/AuthOperations/GoogleCallBack";
 import Dashboard from "./Pages/Dashboard/Dashboard";
-import RequireAuth from "./Pages/Auth/RequireAuth";
-import User from "./Pages/Dashboard/User";
-import AddUser from "./Pages/Dashboard/AddUser";
-import Viewer from "./Pages/Dashboard/Viewer";
-import Err404 from "./Pages/Auth/Err404";
-import RequireBack from "./Pages/Auth/RequireBack";
-import Categories from "./Pages/Dashboard/Categories";
-import AddCategory from "./Pages/Dashboard/AddCategory";
-import Category from "./Pages/Dashboard/Category";
-import Products from "./Pages/Dashboard/Products";
-import AddProduct from "./Pages/Dashboard/AddProduct";
+import RequireAuth from "./Pages/Auth/Protecting/RequireAuth";
+import User from "./Pages/Dashboard/Users/User";
+import AddUser from "./Pages/Dashboard/Users/AddUser";
+import Err404 from "./Pages/Auth/Errors/Err404";
+import RequireBack from "./Pages/Auth/Protecting/RequireBack";
+import Categories from "./Pages/Dashboard/Category/Categories";
+import AddCategory from "./Pages/Dashboard/Category/AddCategory";
+import Category from "./Pages/Dashboard/Category/Category";
+import Products from "./Pages/Dashboard/Product/Products";
+import AddProduct from "./Pages/Dashboard/Product/AddProduct";
+import Product from "./Pages/Dashboard/Product/Product";
 
 function App() {
   return (
@@ -31,7 +31,7 @@ function App() {
         <Route path="/auth/google/callback" element={<GoogleCallBack />} />
         <Route path="/*" element={<Err404 />} />
         {/* Protected Routes */}
-        <Route element={<RequireAuth allowedRole={["1995", "1992"]} />}>
+        <Route element={<RequireAuth allowedRole={["1995", "1999"]} />}>
           <Route path="dashboard" element={<Dashboard />}>
             <Route element={<RequireAuth allowedRole={["1995"]} />}>
               <Route path="users" element={<Users />} />
@@ -45,13 +45,10 @@ function App() {
               <Route path="category/add" element={<AddCategory />} />
               {/* Products */}
               <Route path="products" element={<Products />} />
-              {/* <Route path="products/:id" element={<Product />} /> */}
+              <Route path="products/:id" element={<Product />} />
               <Route path="product/add" element={<AddProduct />} />
             </Route>
 
-            <Route element={<RequireAuth allowedRole={["1992", "1995"]} />}>
-              <Route path="viewer" element={<Viewer />} />
-            </Route>
           </Route>
         </Route>
       </Routes>

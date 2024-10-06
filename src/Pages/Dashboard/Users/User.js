@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
-import { Axios } from "../../Api/Axios";
-import { USER } from "../../Api/Api";
+import { Axios } from "../../../Api/Axios";
+import { USER } from "../../../Api/Api";
 import { useNavigate, useParams } from "react-router-dom";
-import Loading from "../../Components/Loading/Loading";
+import Loading from "../../../Components/Loading/Loading";
 
 export default function User() {
   const navigate = useNavigate();
@@ -12,9 +12,6 @@ export default function User() {
   const [role, setRole] = useState("");
   const [disable, setDisable] = useState(true);
   const [loading, setLoading] = useState(false);
-
-
-  
 
   // ID
   const { id } = useParams();
@@ -57,7 +54,7 @@ export default function User() {
       {loading ? (
         <Loading />
       ) : (
-        <Form className="bg-white w-100 mx-2 p-3" onSubmit={handleSubmit}>
+        <Form className="bg-white w-100 px-4 py-3 rounded shadow-sm" onSubmit={handleSubmit}>
           <h1>Edit User Info</h1>
           <Form.Group className="mb-3" controlId="exampleForm.ControlText1">
             <Form.Label>Name</Form.Label>

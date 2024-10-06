@@ -43,10 +43,10 @@ export default function TopBar() {
   return (
     <>
       {/* {loading ? <Loading /> : ""} */}
-      <div className="topbar">
+      <div className="topbar rounded mb-3 py-2 shadow-sm">
         <div className="d-flex align-items-center justify-content-between h-100">
           <div className="d-flex align-items-center gap-5">
-            <h3>WEGO</h3>
+            <h3>Dashboard</h3>
             <FontAwesomeIcon
               onClick={() => setIsOpen((prev) => !prev)}
               cursor={"pointer"}

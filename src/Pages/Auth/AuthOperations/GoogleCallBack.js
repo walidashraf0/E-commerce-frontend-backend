@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useEffect } from "react";
-import { baseUrl, GOOGLE_CALL_BACK } from "../../Api/Api";
+import { baseUrl, GOOGLE_CALL_BACK } from "../../../Api/Api";
 import { useLocation } from "react-router-dom";
 import Cookie from "cookie-universal";
+
 
 export default function GoogleCallBack() {
   const cookie = Cookie();

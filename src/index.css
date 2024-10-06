@@ -6,10 +6,20 @@
 }
 
 body {
-  font-family: "Lato", sans-serif !important;
+  font-family: "Roboto", sans-serif !important;
 }
 
-.container {
+.f-cairo {
+  font-family: "Cairo", sans-serif !important;
+}
+
+/* .low-shadow {
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.08);
+} */
+a {
+  text-decoration: none !important;
+}
+/* .container {
   margin: 0 auto;
 }
 
@@ -17,4 +27,4 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-}
+} */

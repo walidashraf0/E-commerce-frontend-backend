@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
-import { Axios } from "../../Api/Axios";
-import { CATEGORIES, CATEGORY } from "../../Api/Api";
+import { Axios } from "../../../Api/Axios";
+import { CATEGORIES, CATEGORY } from "../../../Api/Api";
 import { useEffect, useState } from "react";
-import TableShow from "../../Components/Dashboard/TableShow";
+import TableShow from "../../../Components/Dashboard/TableShow";
 
 export default function Categories() {
   const [categories, setCategories] = useState([]);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(5);
 
   //Get All Categories
   useEffect(() => {
@@ -40,14 +42,14 @@ export default function Categories() {
 
   return (
     <>
-      <div className="bg-white w-100 p-2">
+      <div className="bg-white w-100 px-4 py-3 rounded shadow-sm">
         <div className="d-flex align-items-center justify-content-between">
           <h1>Categories</h1>
           <Link className="btn btn-primary" to="/dashboard/category/add">
             Add Category
           </Link>
         </div>
-        <TableShow header={header} data={categories} delete={handleDelete} />
+        <TableShow setPage={setPage} page={page} limit={limit} header={header} data={categories} delete={handleDelete} />
       </div>
     </>
   );

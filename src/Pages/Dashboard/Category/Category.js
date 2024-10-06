@@ -1,9 +1,9 @@
 import { Form } from "react-bootstrap";
-import Loading from "../../Components/Loading/Loading";
+import Loading from "../../../Components/Loading/Loading";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import { CATEGORY } from "../../Api/Api";
-import { Axios } from "../../Api/Axios";
+import { CATEGORY } from "../../../Api/Api";
+import { Axios } from "../../../Api/Axios";
 
 export default function Category() {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ export default function Category() {
   const { id } = useParams();
   // const id = Number(window.location.pathname.replace("/dashboard/categories/", ""));
 
-  // Get User Data
+  // Get Category Data
   useEffect(() => {
     setLoading(true);
     Axios.get(`/${CATEGORY}/${id}`)
@@ -58,7 +58,7 @@ export default function Category() {
       {loading ? (
         <Loading />
       ) : (
-        <Form className="bg-white w-100 mx-2 p-3" onSubmit={handleSubmit}>
+        <Form className="bg-white w-100 px-4 py-3 rounded shadow-sm" onSubmit={handleSubmit}>
           <h1>Edit Category Info</h1>
           <Form.Group className="mb-3" controlId="exampleForm.ControlText1">
             <Form.Label>Title</Form.Label>

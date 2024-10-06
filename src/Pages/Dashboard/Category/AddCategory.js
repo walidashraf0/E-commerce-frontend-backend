@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Loading from "../../Components/Loading/Loading";
+import Loading from "../../../Components/Loading/Loading";
 import { Form } from "react-bootstrap";
-import { Axios } from "../../Api/Axios";
-import { CATEGORY } from "../../Api/Api";
+import { Axios } from "../../../Api/Axios";
+import { CATEGORY } from "../../../Api/Api";
 
 export default function AddCategory() {
   const navigate = useNavigate();
