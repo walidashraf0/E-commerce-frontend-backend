@@ -7,6 +7,9 @@ export default function Users() {
   const [users, setUsers] = useState([]);
   const [currentUser, setCurrentUser] = useState("");
   const [deleted, setDeleted] = useState(false);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(3);
+
 
   // Get Current User
   useEffect(() => {
@@ -60,6 +63,10 @@ export default function Users() {
         <TableShow
           header={header}
           data={users}
+          limit={limit}
+          setLimit={setLimit}
+          page={page}
+          setPage={setPage}
           delete={handleDelete}
           currentUser={currentUser}
         />

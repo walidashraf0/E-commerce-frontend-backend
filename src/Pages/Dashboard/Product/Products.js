@@ -6,6 +6,8 @@ import TableShow from "../../../Components/Dashboard/TableShow";
 
 export default function Products() {
   const [products, setProducts] = useState([]);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(3);
 
   //Get All Products
   useEffect(() => {
@@ -58,7 +60,15 @@ export default function Products() {
             Add Product
           </Link>
         </div>
-        <TableShow header={header} data={products} delete={handleDelete} />
+        <TableShow
+          setPage={setPage}
+          page={page}
+          limit={limit}
+          setLimit={setLimit}
+          header={header}
+          data={products}
+          delete={handleDelete}
+        />
       </div>
     </>
   );

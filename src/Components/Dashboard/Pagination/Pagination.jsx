@@ -1,4 +1,3 @@
-import { useState } from "react";
 import ReactPaginate from "react-paginate";
 import "./Pagination.css";
 
@@ -24,8 +23,8 @@ export default function PaginatedItems({ itemsPerPage, data, setPage }) {
       <ReactPaginate
         breakLabel="..."
         nextLabel=">>"
-        onPageChange={(e) => setPage(e.selected)}
-        pageRangeDisplayed={3}
+        onPageChange={(e) => setPage(e.selected + 1)}
+        pageRangeDisplayed={2}
         pageCount={pageCount}
         previousLabel="<<"
         renderOnZeroPageCount={null}

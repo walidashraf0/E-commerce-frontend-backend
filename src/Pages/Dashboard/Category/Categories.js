@@ -7,7 +7,7 @@ import TableShow from "../../../Components/Dashboard/TableShow";
 export default function Categories() {
   const [categories, setCategories] = useState([]);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(3);
 
   //Get All Categories
   useEffect(() => {
@@ -49,7 +49,7 @@ export default function Categories() {
             Add Category
           </Link>
         </div>
-        <TableShow setPage={setPage} page={page} limit={limit} header={header} data={categories} delete={handleDelete} />
+        <TableShow setPage={setPage} page={page} limit={limit} setLimit={setLimit} header={header} data={categories} delete={handleDelete} />
       </div>
     </>
   );
