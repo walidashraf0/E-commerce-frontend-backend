@@ -4,12 +4,14 @@ import { Form, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./table.css";
 import PaginatedItems from "./Pagination/Pagination";
+import { useState } from "react";
 
 export default function TableShow(props) {
   const currentUser = props.currentUser || {
     name: "",
   };
 
+  const [search, setSearch] = useState("");
   // Front
   // const start = (props.page - 1) * props.limit;
   // const end = Number(props.limit) + Number(start);
@@ -29,8 +31,16 @@ export default function TableShow(props) {
       {header.name}
     </th>
   ));
+
+  const filteredData = props.data.filter((item) =>
+    item.title.toLowerCase().includes(search.toLowerCase())
+  );
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+  };
+
   // Body Show
-  const dataShow = props.data.map((item, key) => (
+  const dataShow = filteredData.map((item, key) => (
     <tr key={key}>
       <td style={{ textAlign: "center" }}>{item.id}</td>
       {props.header.map((item2, key2) => (
@@ -101,6 +111,15 @@ export default function TableShow(props) {
 
   return (
     <>
+      <div className="col-3">
+        <Form.Control
+          type="search"
+          aria-label="input Example"
+          className="my-2"
+          placeholder="Search "
+          onChange={handleSearch}
+        />
+      </div>
       <Table
         className="table-shadow rounded overflow-hidden text-white"
         striped
@@ -123,7 +142,7 @@ export default function TableShow(props) {
               <td colSpan={12}>Loading...</td>
             </tr>
           ) : (
-            dataShow 
+            dataShow
           )}
         </tbody>
       </Table>
