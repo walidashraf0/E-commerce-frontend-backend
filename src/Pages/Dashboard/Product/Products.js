@@ -44,6 +44,14 @@ export default function Products() {
       key: "rating",
       name: "Rating",
     },
+    {
+      key: "created_at",
+      name: "Created",
+    },
+    {
+      key: "updated_at",
+      name: "Updated",
+    },
   ];
 
   // handle Delete

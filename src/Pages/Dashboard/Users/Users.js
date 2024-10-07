@@ -42,6 +42,14 @@ export default function Users() {
       key: "role",
       name: "Role",
     },
+    {
+      key: "created_at",
+      name: "Created",
+    },
+    {
+      key: "updated_at",
+      name: "Last Login",
+    },
   ];
 
   // //Filter Current User

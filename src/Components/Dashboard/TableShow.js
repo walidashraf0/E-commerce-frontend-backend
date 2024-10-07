@@ -15,10 +15,26 @@ export default function TableShow(props) {
   };
 
   const [search, setSearch] = useState("");
+  const [date, setDate] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [searchLoading, setSearchLoading] = useState(false);
-  const showWhichData = search.length > 0 ? filteredData : props.data;
-  TransformDate("2024-10-07T14:17:52.000000Z");
+
+  const filteredDataByDate = props.data.filter(
+    (item) => TransformDate(item.created_at) === date
+  );
+
+  const filterSearchByDate = filteredData.filter(
+    (item) => TransformDate(item.created_at) === date
+  );
+  console.log(filterSearchByDate);
+  const showWhichData =
+    date.length !== 0
+      ? search.length > 0
+        ? filterSearchByDate
+        : filteredDataByDate
+      : search.length > 0
+      ? filteredData
+      : props.data;
 
   // Front
   // const start = (props.page - 1) * props.limit;
@@ -68,6 +84,8 @@ export default function TableShow(props) {
                 />
               ))}
             </div>
+          ) : item2.key === "created_at" || item2.key === "updated_at" ? (
+            TransformDate(item[item2.key])
           ) : item[item2.key] === "1995" ? (
             "Admin"
           ) : item[item2.key] === "2001" ? (
@@ -129,7 +147,6 @@ export default function TableShow(props) {
     return () => clearTimeout(debounce);
   }, [search]);
 
-
   return (
     <>
       <div className="col-3">
@@ -138,10 +155,23 @@ export default function TableShow(props) {
           aria-label="input Example"
           className="my-2"
           placeholder="Search "
-          value={search}
+          // value={search}
           onChange={(e) => {
             setSearch(e.target.value);
             setSearchLoading(true);
+          }}
+        />
+      </div>
+      <div className="col-5">
+        <Form.Control
+          type="date"
+          aria-label="input Example"
+          className="my-2"
+          placeholder="date "
+          // value={date}
+          onChange={(e) => {
+            setDate(e.target.value);
+            // setSearchLoading(true);
           }}
         />
       </div>
