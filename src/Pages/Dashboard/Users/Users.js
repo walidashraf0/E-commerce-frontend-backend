@@ -7,9 +7,10 @@ export default function Users() {
   const [users, setUsers] = useState([]);
   const [currentUser, setCurrentUser] = useState("");
   const [deleted, setDeleted] = useState(false);
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(3);
-
+  const [page, setPage] = useState(4);
+  const [limit, setLimit] = useState(5);
+  const [loading, setLoading] = useState(false);
+  const [total, setTotal] = useState(0);
 
   // Get Current User
   useEffect(() => {
@@ -18,10 +19,14 @@ export default function Users() {
 
   //Get All Users
   useEffect(() => {
-    Axios.get(`/${USERS}`)
-      .then((data) => setUsers(data.data))
-      .catch((err) => console.log(err));
-  }, [deleted]);
+    Axios.get(`/${USERS}?limit=${limit}&page=${page}`)
+      .then((data) => {
+        setUsers(data.data.data);
+        setTotal(data.data.total);
+      })
+      .catch((err) => console.log(err))
+      .finally(() => setLoading(false));
+  }, [deleted, limit, page]);
 
   const header = [
     {
@@ -69,6 +74,8 @@ export default function Users() {
           setPage={setPage}
           delete={handleDelete}
           currentUser={currentUser}
+          loading={loading}
+          total={total}
         />
       </div>
     </>

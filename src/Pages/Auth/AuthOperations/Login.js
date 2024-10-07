@@ -67,7 +67,7 @@ export default function Login() {
     <>
       {loading ? <Loading /> : ""}
       <div className="container">
-        <div className="row" style={{ height: "100vh" }}>
+        <div className="row d-flex align-items-center justify-content-center" style={{ height: "100vh" }}>
           <Form className="form" onSubmit={handleSubmit}>
             <div className="custom-form">
               <h1>Login Now</h1>

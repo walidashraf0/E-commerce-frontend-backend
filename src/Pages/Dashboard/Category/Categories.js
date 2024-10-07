@@ -6,18 +6,23 @@ import TableShow from "../../../Components/Dashboard/TableShow";
 
 export default function Categories() {
   const [categories, setCategories] = useState([]);
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(3);
+  const [page, setPage] = useState(4);
+  const [limit, setLimit] = useState(5);
+  const [loading, setLoading] = useState(false);
+  const [total, setTotal] = useState(0);
 
   //Get All Categories
   useEffect(() => {
-    Axios.get(`/${CATEGORIES}`)
+    setLoading(true);
+    Axios.get(`/${CATEGORIES}?limit=${limit}&page=${page}`)
       .then((data) => {
-        setCategories(data.data);
-        // console.log(data.data);
+        setCategories(data.data.data);
+        setTotal(data.data.total);
+        console.log(data.data);
       })
-      .catch((err) => console.log(err));
-  }, []);
+      .catch((err) => console.log(err))
+      .finally(() => setLoading(false));
+  }, [limit, page]);
 
   const header = [
     {
@@ -49,7 +54,17 @@ export default function Categories() {
             Add Category
           </Link>
         </div>
-        <TableShow setPage={setPage} page={page} limit={limit} setLimit={setLimit} header={header} data={categories} delete={handleDelete} />
+        <TableShow
+          setPage={setPage}
+          page={page}
+          limit={limit}
+          setLimit={setLimit}
+          header={header}
+          data={categories}
+          delete={handleDelete}
+          loading={loading}
+          total={total}
+        />
       </div>
     </>
   );

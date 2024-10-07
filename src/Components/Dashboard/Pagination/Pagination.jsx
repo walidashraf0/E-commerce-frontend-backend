@@ -1,21 +1,9 @@
 import ReactPaginate from "react-paginate";
 import "./Pagination.css";
 
-// function Items({ currentItems }) {
-//   return (
-//     <>
-//       {currentItems &&
-//         currentItems.map((item) => (
-//           <div>
-//             <h3>Item #{item}</h3>
-//           </div>
-//         ))}
-//     </>
-//   );
-// }
 
-export default function PaginatedItems({ itemsPerPage, data, setPage }) {
-  const pageCount = data.length / itemsPerPage;
+export default function PaginatedItems({ itemsPerPage, total, setPage }) {
+  const pageCount = Math.ceil(total / itemsPerPage);
 //   console.log(pageCount);
   return (
     <>

@@ -10,9 +10,10 @@ export default function TableShow(props) {
     name: "",
   };
 
-  const start = (props.page - 1) * props.limit;
-  const end = Number(props.limit) + Number(start);
-  const final = props.data.slice(start, end);
+  // Front
+  // const start = (props.page - 1) * props.limit;
+  // const end = Number(props.limit) + Number(start);
+  // const final = props.data.slice(start, end);
 
   // let paginateData = [];
 
@@ -29,9 +30,9 @@ export default function TableShow(props) {
     </th>
   ));
   // Body Show
-  const dataShow = final.map((item, key) => (
+  const dataShow = props.data.map((item, key) => (
     <tr key={key}>
-      <td style={{ textAlign: "center" }}>{key + 1}</td>
+      <td style={{ textAlign: "center" }}>{item.id}</td>
       {props.header.map((item2, key2) => (
         <td key={key2} style={{ textAlign: "center" }}>
           {item2.key === "image" ? (
@@ -117,20 +118,21 @@ export default function TableShow(props) {
           </tr>
         </thead>
         <tbody>
-          {props.data.length === 0 ? (
+          {props.loading ? (
             <tr style={{ textAlign: "center" }}>
               <td colSpan={12}>Loading...</td>
             </tr>
           ) : (
-            ""
+            dataShow 
           )}
-          {dataShow}
         </tbody>
       </Table>
 
       <div className="d-flex align-items-center justify-content-end flex-wrap">
         <div className="col-1">
-          <Form.Select onChange={(e) => props.setLimit(e.target.value)} aria-label="Default Select Example">
+          <Form.Select
+            onChange={(e) => props.setLimit(e.target.value)}
+            aria-label="Default Select Example">
             <option value="3">3</option>
             <option value="5">5</option>
             <option value="10">10</option>
@@ -141,6 +143,7 @@ export default function TableShow(props) {
           itemsPerPage={props.limit}
           data={props.data}
           setPage={props.setPage}
+          total={props.total}
         />
       </div>
     </>

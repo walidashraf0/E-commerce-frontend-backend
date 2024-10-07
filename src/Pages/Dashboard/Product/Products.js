@@ -6,20 +6,25 @@ import TableShow from "../../../Components/Dashboard/TableShow";
 
 export default function Products() {
   const [products, setProducts] = useState([]);
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(3);
+  const [page, setPage] = useState(4);
+  const [limit, setLimit] = useState(5);
+  const [loading, setLoading] = useState(false);
+  const [total, setTotal] = useState(0);
+
 
   //Get All Products
   useEffect(() => {
-    Axios.get(`/${PRODUCTS}`)
+    Axios.get(`/${PRODUCTS}?limit=${limit}&page=${page}`)
       .then((data) => {
-        setProducts(data.data);
+        setProducts(data.data.data);
+        setTotal(data.data.total);
         console.log(data.data);
       })
-      .catch((err) => console.log(err));
-  }, []);
+      .catch((err) => console.log(err))
+      .finally(() => setLoading(false));
+  }, [limit, page]);
 
-  console.log(products);
+  // console.log(products);
 
   const header = [
     { key: "images", name: "Images" },
@@ -68,6 +73,8 @@ export default function Products() {
           header={header}
           data={products}
           delete={handleDelete}
+          loading={loading}
+          total={total}
         />
       </div>
     </>
