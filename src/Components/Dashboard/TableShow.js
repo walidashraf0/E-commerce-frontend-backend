@@ -4,7 +4,10 @@ import { Form, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./table.css";
 import PaginatedItems from "./Pagination/Pagination";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Axios } from "../../Api/Axios";
+import { CATEGORY } from "../../Api/Api";
+import TransformDate from "../../Helpers/TransformDate";
 
 export default function TableShow(props) {
   const currentUser = props.currentUser || {
@@ -12,6 +15,11 @@ export default function TableShow(props) {
   };
 
   const [search, setSearch] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
+  const [searchLoading, setSearchLoading] = useState(false);
+  const showWhichData = search.length > 0 ? filteredData : props.data;
+  TransformDate("2024-10-07T14:17:52.000000Z");
+
   // Front
   // const start = (props.page - 1) * props.limit;
   // const end = Number(props.limit) + Number(start);
@@ -32,15 +40,16 @@ export default function TableShow(props) {
     </th>
   ));
 
-  const filteredData = props.data.filter((item) =>
-    item.title.toLowerCase().includes(search.toLowerCase())
-  );
-  const handleSearch = (e) => {
-    setSearch(e.target.value);
-  };
+  //Front
+  // const filteredData = props.data.filter((item) =>
+  //   item[props.search].toLowerCase().includes(search.toLowerCase())
+  // );
+  // const handleSearch = (e) => {
+  //   setSearch(e.target.value);
+  // };
 
-  // Body Show
-  const dataShow = filteredData.map((item, key) => (
+  // Body Data Show
+  const dataShow = showWhichData.map((item, key) => (
     <tr key={key}>
       <td style={{ textAlign: "center" }}>{item.id}</td>
       {props.header.map((item2, key2) => (
@@ -99,15 +108,27 @@ export default function TableShow(props) {
     </tr>
   ));
 
-  // handle Delete
-  // const handleDelete = async (id) => {
-  //   try {
-  //     const res = await Axios.delete(`${props.delete}/${id}`);
-  //     // setDeleted((prev) => !prev);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  const getSearchData = async () => {
+    try {
+      const res = await Axios.post(
+        `${props.searchLink}/search?title=${search}`
+      );
+      setFilteredData(res.data);
+      // console.log(res);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setSearchLoading(false);
+    }
+  };
+  useEffect(() => {
+    const debounce = setTimeout(() => {
+      search.length > 0 ? getSearchData() : setSearchLoading(false);
+    }, 500);
+
+    return () => clearTimeout(debounce);
+  }, [search]);
+
 
   return (
     <>
@@ -117,7 +138,11 @@ export default function TableShow(props) {
           aria-label="input Example"
           className="my-2"
           placeholder="Search "
-          onChange={handleSearch}
+          value={search}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            setSearchLoading(true);
+          }}
         />
       </div>
       <Table
@@ -140,6 +165,10 @@ export default function TableShow(props) {
           {props.loading ? (
             <tr style={{ textAlign: "center" }}>
               <td colSpan={12}>Loading...</td>
+            </tr>
+          ) : searchLoading ? (
+            <tr style={{ textAlign: "center" }}>
+              <td colSpan={12}>Searching...</td>
             </tr>
           ) : (
             dataShow

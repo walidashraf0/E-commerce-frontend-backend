@@ -3,6 +3,7 @@ import { Axios } from "../../../Api/Axios";
 import { CATEGORIES, CATEGORY } from "../../../Api/Api";
 import { useEffect, useState } from "react";
 import TableShow from "../../../Components/Dashboard/TableShow";
+import { Form } from "react-bootstrap";
 
 export default function Categories() {
   const [categories, setCategories] = useState([]);
@@ -10,6 +11,7 @@ export default function Categories() {
   const [limit, setLimit] = useState(5);
   const [loading, setLoading] = useState(false);
   const [total, setTotal] = useState(0);
+  const [search, setSearch] = useState("");
 
   //Get All Categories
   useEffect(() => {
@@ -33,6 +35,14 @@ export default function Categories() {
       key: "image",
       name: "Image",
     },
+    {
+      key: "created_at",
+      name: "Created",
+    },
+    {
+      key: "updated_at",
+      name: "Updated",
+    },
   ];
 
   // handle Delete
@@ -45,6 +55,23 @@ export default function Categories() {
     }
   };
 
+  const getSearchData = async () => {
+    try {
+      const res = await Axios.post(`${CATEGORY}/search?title=${search}`);
+      // setSearch(e.target.value);
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    const debounce = setTimeout(() => {
+      getSearchData();
+    }, 800);
+
+    return () =>  clearTimeout(debounce);
+  }, [search]);
+
   return (
     <>
       <div className="bg-white w-100 px-4 py-3 rounded shadow-sm">
@@ -54,6 +81,11 @@ export default function Categories() {
             Add Category
           </Link>
         </div>
+
+        
+
+        {/* <button onClick={getSearchData}>Get Data</button> */}
+
         <TableShow
           setPage={setPage}
           page={page}
@@ -64,6 +96,8 @@ export default function Categories() {
           delete={handleDelete}
           loading={loading}
           total={total}
+          search="title"
+          searchLink={CATEGORY}
         />
       </div>
     </>

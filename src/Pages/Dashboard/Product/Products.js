@@ -75,6 +75,8 @@ export default function Products() {
           delete={handleDelete}
           loading={loading}
           total={total}
+          search="title"
+          searchLink={PRODUCT}
         />
       </div>
     </>

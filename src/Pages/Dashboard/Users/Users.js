@@ -19,14 +19,15 @@ export default function Users() {
 
   //Get All Users
   useEffect(() => {
-    Axios.get(`/${USERS}?limit=${limit}&page=${page}`)
+    Axios.get(`/${USERS}?&page=${page}limit=${limit}`)
       .then((data) => {
         setUsers(data.data.data);
         setTotal(data.data.total);
+        console.log(data.data);
       })
       .catch((err) => console.log(err))
       .finally(() => setLoading(false));
-  }, [deleted, limit, page]);
+  }, [limit, page]);
 
   const header = [
     {
@@ -76,6 +77,8 @@ export default function Users() {
           currentUser={currentUser}
           loading={loading}
           total={total}
+          search="name"
+          searchLink={USER}
         />
       </div>
     </>
