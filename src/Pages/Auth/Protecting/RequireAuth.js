@@ -11,6 +11,7 @@ export default function RequireAuth({ allowedRole }) {
 
   //User
   const [user, setUser] = useState("");
+  console.log(user);
 
   useEffect(() => {
     Axios.get(`/${USER}`)

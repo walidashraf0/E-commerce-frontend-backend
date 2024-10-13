@@ -36,14 +36,14 @@ function App() {
         <Route path="/auth/google/callback" element={<GoogleCallBack />} />
         <Route path="/*" element={<Err404 />} />
         {/* Protected Routes */}
-        <Route element={<RequireAuth allowedRole={["1995", "1999"]} />}>
+        <Route element={<RequireAuth allowedRole={["1995", "1999", "2001", "1992"]} />}>
           <Route path="dashboard" element={<Dashboard />}>
-            <Route element={<RequireAuth allowedRole={["1995"]} />}>
+            <Route element={<RequireAuth allowedRole={["1995", "2001"]} />}>
               <Route path="users" element={<Users />} />
               <Route path="users/:id" element={<User />} />
               <Route path="user/add" element={<AddUser />} />
             </Route>
-            <Route element={<RequireAuth allowedRole={["1999", "1995"]} />}>
+            <Route element={<RequireAuth allowedRole={["1999", "1995", "2001", "1992"]} />}>
               {/* Categories */}
               <Route path="categories" element={<Categories />} />
               <Route path="categories/:id" element={<Category />} />

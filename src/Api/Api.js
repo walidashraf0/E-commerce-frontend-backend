@@ -19,5 +19,7 @@ export const PRODUCTS = "products";
 // Product
 export const PRODUCT = "product";
 
+export const LATESTPRO = "latest-sale";
+
 // GoogleCallBack
 export const GOOGLE_CALL_BACK = "auth/google/callback";
