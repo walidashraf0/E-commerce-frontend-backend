@@ -1,0 +1,16 @@
+.hand {
+    background-image: url("../..//../Assets/landing.jpg");
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+}
+
+.custom-search {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.custom-search:focus {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1) !important;
+    border: rgba(0, 0, 0, 0.1) !important;
+    outline: rgba(0, 0, 0, 0.1) !important;
+}

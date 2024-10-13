@@ -13,6 +13,7 @@ export default function Categories() {
   const [total, setTotal] = useState(0);
   const [search, setSearch] = useState("");
 
+
   //Get All Categories
   useEffect(() => {
     setLoading(true);
@@ -69,7 +70,7 @@ export default function Categories() {
       getSearchData();
     }, 800);
 
-    return () =>  clearTimeout(debounce);
+    return () => clearTimeout(debounce);
   }, [search]);
 
   return (
@@ -81,8 +82,6 @@ export default function Categories() {
             Add Category
           </Link>
         </div>
-
-        
 
         {/* <button onClick={getSearchData}>Get Data</button> */}
 

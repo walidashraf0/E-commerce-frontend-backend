@@ -76,7 +76,6 @@ export default function Category() {
             <Form.Label>Image</Form.Label>
             <Form.Control
               type="file"
-              required
               onChange={(e) => setImage(e.target.files.item(0))}
             />
           </Form.Group>

@@ -10,11 +10,10 @@ import { BrowserRouter as Router } from "react-router-dom";
 import MenuContext from "./Context/MenuContext";
 import WindowContext from "./Context/WindowContext";
 import "./Pages/Auth/AuthOperations/Auth.css";
-// import "./custom.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <WindowContext>
       <MenuContext>
         <Router>
@@ -22,5 +21,5 @@ root.render(
         </Router>
       </MenuContext>
     </WindowContext>
-  </React.StrictMode>
+  // </React.StrictMode>
 );
