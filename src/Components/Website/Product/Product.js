@@ -6,7 +6,7 @@ export default function Product(props) {
     const roundStars = Math.round(props.rating)
   const stars = Math.min(roundStars, 5);
   const showGoldStars = Array.from({ length: stars }).map((_, key) => (
-    <FontAwesomeIcon key={key} icon={solid} />
+    <FontAwesomeIcon key={key} color="gold" icon={solid} />
   ));
   const showEmptyStars = Array.from({ length: 5 - stars }).map((_, key) => (
     <FontAwesomeIcon key={key} icon={faStar} />

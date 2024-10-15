@@ -5,19 +5,20 @@ import { Axios } from "../../../Api/Axios";
 import { CATEGORIES } from "../../../Api/Api";
 import "./navbar.css";
 import StringSlice from "../../../Helpers/StringSlice";
+import SkeletonShow from "../Skeleton/SkeletonShow";
 
 export default function NavBar() {
   const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    Axios.get(`${CATEGORIES}/`).then((res) =>
-      setCategories(res.data.slice(-8))
-    );
+    Axios.get(`${CATEGORIES}/`)
+      .then((res) => setCategories(res.data.slice(-8)))
+      .finally(() => setLoading(false));
   }, []);
 
   const categoriesShow = categories.map((category, key) => (
-    <p key={key}>
-      {StringSlice(category.title, 15)}
-    </p>
+    <p key={key}>{StringSlice(category.title, 15)}</p>
   ));
   return (
     <>
@@ -60,7 +61,18 @@ export default function NavBar() {
           </div>
           <div className="mt-3">
             <div className="d-flex align-items-center justify-content-start gap-5">
-              {categoriesShow}
+              {loading ? (
+                <>
+                  <SkeletonShow
+                    height="30px"
+                    width="70px"
+                    length="8"
+                    classes="col-2"
+                  />
+                </>
+              ) : (
+                categoriesShow
+              )}
               <Link className="text-black category-title" to="/categories">
                 Show All
               </Link>

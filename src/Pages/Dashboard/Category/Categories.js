@@ -13,7 +13,6 @@ export default function Categories() {
   const [total, setTotal] = useState(0);
   const [search, setSearch] = useState("");
 
-
   //Get All Categories
   useEffect(() => {
     setLoading(true);
@@ -60,7 +59,7 @@ export default function Categories() {
     try {
       const res = await Axios.post(`${CATEGORY}/search?title=${search}`);
       // setSearch(e.target.value);
-      console.log(res);
+      // console.log(res);
     } catch (err) {
       console.log(err);
     }
@@ -72,6 +71,8 @@ export default function Categories() {
 
     return () => clearTimeout(debounce);
   }, [search]);
+
+  console.log(categories[0]);
 
   return (
     <>
