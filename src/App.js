@@ -19,6 +19,7 @@ import AddProduct from "./Pages/Dashboard/Product/AddProduct";
 import Product from "./Pages/Dashboard/Product/Product";
 import WebsiteCategories from "./Pages/Website/Categories/Categories";
 import Website from "./Pages/Website/Website";
+import SingleProduct from "./Pages/Website/SingleProduct/SingleProduct";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route element={<Website />}>
           <Route path="/" element={<Home />} />
           <Route path="/categories" element={<WebsiteCategories />} />
+          <Route path="/product/:id" element={<SingleProduct />} />
         </Route>
         <Route element={<RequireBack />}>
           <Route path="login" element={<Login />} />

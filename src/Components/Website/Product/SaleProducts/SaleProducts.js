@@ -1,9 +1,10 @@
 import { faStar as solid } from "@fortawesome/free-solid-svg-icons";
 import { faStar } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { NavLink } from "react-router-dom";
 
 export default function Product(props) {
-    const roundStars = Math.round(props.rating)
+  const roundStars = Math.round(props.rating);
   const stars = Math.min(roundStars, 5);
   const showGoldStars = Array.from({ length: stars }).map((_, key) => (
     <FontAwesomeIcon key={key} color="gold" icon={solid} />
@@ -14,13 +15,13 @@ export default function Product(props) {
 
   return (
     <>
-      <div className="col-lg-3 col-md-6 col-12">
+      <NavLink to={`/product/${props.id}`} className={`col-md-${props.col} col-12`}>
         <div className="m-1 border rounded p-3 h-100">
           <div className="border-bottom pd-3">
             <p className="text-truncate" style={{ color: "gray" }}>
               {props.title}
             </p>
-            <p className="text-truncate">{props.desc} ...</p>
+            <p className="text-truncate text-black">{props.desc} ...</p>
             <div className="px-5 py-4 position-relative">
               {props.discount ? (
                 <p
@@ -63,14 +64,14 @@ export default function Product(props) {
             </div>
             <div className="border p-2 rounded">
               <img
-                src={require("../../../Assets/cart.png")}
+                src={require("../../../../Assets/cart.png")}
                 alt="cart"
                 width="20px"
               />
             </div>
           </div>
         </div>
-      </div>
+      </NavLink>
     </>
   );
 }

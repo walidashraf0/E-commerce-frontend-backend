@@ -20,6 +20,8 @@ export const PRODUCTS = "products";
 export const PRODUCT = "product";
 
 export const LATESTPRO = "latest-sale";
+export const LATEST = "latest";
+export const TOPRATED = "top-rated";
 
 // GoogleCallBack
 export const GOOGLE_CALL_BACK = "auth/google/callback";

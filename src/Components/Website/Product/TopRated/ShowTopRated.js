@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
-import { Axios } from "../../../Api/Axios";
-import { LATESTPRO } from "../../../Api/Api";
-import Product from "./Product";
-import { Container } from "react-bootstrap";
-import Skeleton from "react-loading-skeleton";
-import SkeletonShow from "../Skeleton/SkeletonShow";
+import { Axios } from "../../../../Api/Axios";
+import { TOPRATED } from "../../../../Api/Api";
+import TopRated from "./TopRated";
+import SkeletonShow from "../../Skeleton/SkeletonShow";
 
-export default function LatestSaleProducts() {
+export default function ShowTopRated() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    Axios.get(`${LATESTPRO}`)
+    Axios.get(`${TOPRATED}`)
       .then((res) => setProducts(res.data))
       .finally(() => setLoading(false));
   }, []);
@@ -18,8 +16,8 @@ export default function LatestSaleProducts() {
   //   const imagesShow = products.map((res) => console.log(res.images[0].image));
 
   // console.log(products.images);
-  const productsShow = products.map((product, key) => (
-    <Product
+  const topRatedShow = products.map((product, key) => (
+    <TopRated
       key={key}
       price={product.price}
       title={product.title}
@@ -27,26 +25,28 @@ export default function LatestSaleProducts() {
       discount={product.discount}
       //   img={product.images[0].image}
       rating={product.rating}
+      id={product.id}
     />
   ));
 
   return (
     <>
-      <Container>
-        <h1>Latest Sale Products</h1>
-        <div className="d-flex align-items-stretch justify-content-center flex-wrap row-gap-2 mt-3 mb-5">
+      <div className="col-md-6 col-12" style={{ border: "2px solid #0D6EFD" }}>
+        <h1 className="text-center m-0 p-3 bg-primary text-white">Top Rated</h1>
+        <div className="p-5">
           {loading ? (
             <SkeletonShow
-              length="4"
+              length="6"
+              width="500px"
               height="300px"
               baseColor="white"
-              classes="col-lg-3 col-md-6 col-12"
+              classes="col-md-6 col-12"
             />
           ) : (
-            productsShow
+            topRatedShow
           )}
         </div>
-      </Container>
+      </div>
     </>
   );
 }
