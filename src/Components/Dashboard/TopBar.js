@@ -7,7 +7,6 @@ import { LOGOUT, USER } from "../../Api/Api";
 import { useNavigate } from "react-router-dom";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import Cookie from "cookie-universal";
-import Loading from "../Loading/Loading";
 
 export default function TopBar() {
   const menu = useContext(Menu);
@@ -17,7 +16,6 @@ export default function TopBar() {
 
   //User
   const [name, setName] = useState("");
-  const [loading, setLoading] = useState(false);
 
   // Cookie
   const cookie = Cookie();

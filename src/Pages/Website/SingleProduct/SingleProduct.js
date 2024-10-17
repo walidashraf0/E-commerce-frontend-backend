@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import ImageGallery from "react-image-gallery";
 import { Axios } from "../../../Api/Axios";
@@ -8,11 +8,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as solid } from "@fortawesome/free-solid-svg-icons";
 import { faStar } from "@fortawesome/free-regular-svg-icons";
 import SkeletonShow from "../../../Components/Website/Skeleton/SkeletonShow";
+import { Cart } from "../../../Context/CartChangerContext";
+import PlusMinusBtn from "../../../Components/Website/Btns/PlusMinusBtn";
+
 export default function SingleProduct() {
   const [product, setProduct] = useState([]);
   const [productImages, setProductImages] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [count, setCount] = useState(5);
   const { id } = useParams();
+
+  const { setIsChange } = useContext(Cart);
 
   const roundStars = Math.round(product.rating);
   const stars = Math.min(roundStars, 5);
@@ -37,6 +43,29 @@ export default function SingleProduct() {
   }, []);
 
   // console.log(product);
+  const handleSaveProduct = () => {
+    const getItems = JSON.parse(localStorage.getItem("product")) || [];
+
+    const productExist = getItems.findIndex((pro) => pro.id == id);
+
+    console.log(productExist);
+    if (productExist !== -1) {
+      if (getItems[productExist].count) {
+        getItems[productExist].count += count;
+      } else {
+        getItems[productExist].count = count;
+      }
+    } else {
+      if(count > 1) {
+        product.count = count;
+      }
+      getItems.push(product);
+    }
+
+    // console.log(getItems);
+    localStorage.setItem("product", JSON.stringify(getItems));
+    setIsChange((prev) => !prev);
+  };
 
   return (
     <>
@@ -106,12 +135,18 @@ export default function SingleProduct() {
                         </h6>
                       </div>
                     </div>
-                    <div className="border p-2 rounded">
-                      <img
-                        src={require("../../../Assets/cart.png")}
-                        alt="cart"
-                        width="20px"
-                      />
+                    <div className="d-flex align-items-center gap-4">
+                      <PlusMinusBtn setCount={(data) => setCount(data)} />
+                      <div
+                        style={{ cursor: "pointer" }}
+                        onClick={handleSaveProduct}
+                        className="border p-2 rounded">
+                        <img
+                          src={require("../../../Assets/cart.png")}
+                          alt="cart"
+                          width="20px"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>

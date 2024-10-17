@@ -10,18 +10,20 @@ import { BrowserRouter as Router } from "react-router-dom";
 import MenuContext from "./Context/MenuContext";
 import WindowContext from "./Context/WindowContext";
 import "./Pages/Auth/AuthOperations/Auth.css";
-import 'react-loading-skeleton/dist/skeleton.css'
-
+import "react-loading-skeleton/dist/skeleton.css";
+import CartChangerContext from "./Context/CartChangerContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <React.StrictMode>
-    <WindowContext>
-      <MenuContext>
+  <WindowContext>
+    <MenuContext>
+      <CartChangerContext>
         <Router>
           <App />
         </Router>
-      </MenuContext>
-    </WindowContext>
+      </CartChangerContext>
+    </MenuContext>
+  </WindowContext>
   // </React.StrictMode>
 );

@@ -14,6 +14,7 @@ export default function AddProduct() {
     discount: "",
     About: "",
     rating: "",
+    stock: "",
   });
 
   // Ay Data
@@ -25,6 +26,7 @@ export default function AddProduct() {
     discount: 0,
     About: "About",
     rating: 0,
+    stock: 0,
   };
   const [images, setImages] = useState([]);
 
@@ -277,6 +279,19 @@ export default function AddProduct() {
               required
               onChange={handleChange}
               placeholder="rating..."
+              disabled={!sent}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="stock">
+            <Form.Label>Stock</Form.Label>
+            <Form.Control
+              type="number"
+              name="stock"
+              value={form.stock}
+              required
+              onChange={handleChange}
+              placeholder="stock..."
               disabled={!sent}
             />
           </Form.Group>

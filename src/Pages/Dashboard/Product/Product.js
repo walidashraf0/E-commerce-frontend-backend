@@ -14,6 +14,7 @@ export default function Product() {
     discount: "",
     About: "",
     rating: "",
+    stock: "",
   });
 
   const [images, setImages] = useState([]);
@@ -291,6 +292,19 @@ export default function Product() {
               required
               onChange={handleChange}
               placeholder="rating..."
+              //   disabled={!sent}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="price">
+            <Form.Label>Stock</Form.Label>
+            <Form.Control
+              type="number"
+              name="stock"
+              value={form.stock}
+              required
+              onChange={handleChange}
+              placeholder="stock..."
               //   disabled={!sent}
             />
           </Form.Group>
