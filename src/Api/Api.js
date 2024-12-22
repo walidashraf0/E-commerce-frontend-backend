@@ -25,3 +25,6 @@ export const TOPRATED = "top-rated";
 
 // GoogleCallBack
 export const GOOGLE_CALL_BACK = "auth/google/callback";
+
+//Cart
+export const CART = "/cart";

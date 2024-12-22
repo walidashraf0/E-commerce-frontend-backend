@@ -3,7 +3,7 @@ import { Container } from "react-bootstrap";
 import ImageGallery from "react-image-gallery";
 import { Axios } from "../../../Api/Axios";
 import { useParams } from "react-router-dom";
-import { PRODUCT } from "../../../Api/Api";
+import { CART, PRODUCT } from "../../../Api/Api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as solid } from "@fortawesome/free-solid-svg-icons";
 import { faStar } from "@fortawesome/free-regular-svg-icons";
@@ -13,6 +13,8 @@ import PlusMinusBtn from "../../../Components/Website/Btns/PlusMinusBtn";
 
 export default function SingleProduct() {
   const [product, setProduct] = useState([]);
+  const [error, setError] = useState("");
+  const [loadingCart, setLoadingCart] = useState(false);
   const [productImages, setProductImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [count, setCount] = useState(5);
@@ -29,6 +31,27 @@ export default function SingleProduct() {
     <FontAwesomeIcon key={key} icon={faStar} />
   ));
 
+  // console.log(product)
+
+  const checkStock = async () => {
+    try {
+      setLoadingCart(true);
+      const getItems = JSON.parse(localStorage.getItem("product")) || [];
+      const productCount = getItems.filter(item => item.id!== id)?.[0]?.count;
+      // console.log(productCount);
+      await Axios.post(`${CART}/check`, {
+        product_id: product.id,
+        count: count + (productCount ? productCount : 0),
+      });
+      return true;
+    } catch (err) {
+      console.log(err);
+      return false;
+    } finally {
+      setLoadingCart(false);
+    }
+  };
+
   useEffect(() => {
     Axios.get(`${PRODUCT}/${id}`)
       .then((res) => {
@@ -43,28 +66,30 @@ export default function SingleProduct() {
   }, []);
 
   // console.log(product);
-  const handleSaveProduct = () => {
-    const getItems = JSON.parse(localStorage.getItem("product")) || [];
+  const handleSaveProduct = async () => {
+    const check = await checkStock();
+    if (check) {
+      const getItems = JSON.parse(localStorage.getItem("product")) || [];
 
-    const productExist = getItems.findIndex((pro) => pro.id == id);
+      const productExist = getItems.findIndex((pro) => pro.id == id);
 
-    console.log(productExist);
-    if (productExist !== -1) {
-      if (getItems[productExist].count) {
-        getItems[productExist].count += count;
+      console.log(productExist);
+      if (productExist !== -1) {
+        if (getItems[productExist].count) {
+          getItems[productExist].count += count;
+        } else {
+          getItems[productExist].count = count;
+        }
       } else {
-        getItems[productExist].count = count;
+        if (count > 1) {
+          product.count = count;
+        }
+        getItems.push(product);
       }
-    } else {
-      if(count > 1) {
-        product.count = count;
-      }
-      getItems.push(product);
+      // console.log(getItems);
+      localStorage.setItem("product", JSON.stringify(getItems));
+      setIsChange((prev) => !prev);
     }
-
-    // console.log(getItems);
-    localStorage.setItem("product", JSON.stringify(getItems));
-    setIsChange((prev) => !prev);
   };
 
   return (
@@ -119,6 +144,11 @@ export default function SingleProduct() {
 
                   <div className="d-flex align-items-center justify-content-between pt-4 border-top">
                     <div>
+                      {product.stock === 1 ? (
+                        <p className="text-danger">There is only 1 left</p>
+                      ) : (
+                        ""
+                      )}
                       {showGoldStars}
                       {showEmptyStars}
                       <div className="d-flex align-items-center gap-3">
@@ -141,11 +171,15 @@ export default function SingleProduct() {
                         style={{ cursor: "pointer" }}
                         onClick={handleSaveProduct}
                         className="border p-2 rounded">
-                        <img
-                          src={require("../../../Assets/cart.png")}
-                          alt="cart"
-                          width="20px"
-                        />
+                        {loadingCart ? (
+                          "Loading"
+                        ) : (
+                          <img
+                            src={require("../../../Assets/cart.png")}
+                            alt="cart"
+                            width="20px"
+                          />
+                        )}
                       </div>
                     </div>
                   </div>

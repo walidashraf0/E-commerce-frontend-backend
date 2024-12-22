@@ -18,7 +18,7 @@ export default function NavBar() {
   const [count, setCount] = useState(5);
 
   const { isChange } = useContext(Cart);
-  console.log(isChange);
+  //console.log(isChange);
 
   const [show, setShow] = useState(false);
 
@@ -36,13 +36,13 @@ export default function NavBar() {
     setProducts(getProducts);
   }, [isChange]);
 
-  console.log(products);
+  //console.log(products);
 
   const handleDelete = (id) => {
     const filterProduct = products.filter((product) => product.id !== id);
     setProducts(filterProduct);
     localStorage.setItem("product", JSON.stringify(filterProduct));
-    console.log(filterProduct);
+    //console.log(filterProduct);
   };
 
   const changeCount = (id, btnCount) => {
