@@ -49,9 +49,9 @@ export default function Login() {
       setLoading(false);
       const token = res.data.token;
       const role = res.data.user.role;
-      const go = role === "1995" ? "users" : "viewer";
+      const go = role === "1995" ? "/dashboard/users" : "/";
       cookie.set("e-commerce", token);
-      window.location.pathname = `/dashboard/${go}`;
+      window.location.pathname = `${go}`;
       // console.log("Success");
     } catch (err) {
       setLoading(false);
